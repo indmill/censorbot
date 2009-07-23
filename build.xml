@@ -1,0 +1,54 @@
+<project name="censorbot-clj" basedir="." default="compile">
+ 
+  <property environment="env" />  
+  <property name="sdk.dir" location="/Users/steve/nature/os/appengine-java-sdk-1.2.1" />
+  <property name="classes.dir" value="war/WEB-INF/classes" />
+  <property name="lib.dir" value="war/WEB-INF/lib" />
+  <property name="src.dir" value="src" />
+  
+  <import file="${sdk.dir}/config/user/ant-macros.xml"/>
+  
+  <path id="project.classpath">
+    <pathelement path="${classes.dir}" />
+    <fileset dir="${lib.dir}">
+      <include name="**/*.jar" />
+    </fileset>
+    <fileset dir="${sdk.dir}/lib">
+      <include name="**/*.jar" />
+    </fileset>
+  </path>
+
+    <target name="print_default_properties" >
+      <echo message="os.name:          ${os.name}"          />
+      <echo message="basdir:           ${basedir}"          />
+      <echo message="ant.file:         ${ant.file}"         />
+      <echo message="ant.project.name: ${ant.project.name}" />
+      <echo message="ant.java.version: ${ant.java.version}" />
+    </target>
+  
+  <target name="clean">
+    <delete dir="${classes.dir}" />
+  </target>
+  
+  <target name="init">
+    <mkdir dir="${classes.dir}" />
+  </target>
+  
+  <target name="compile" depends="clean,init">
+    <echo message="${ant.java.version}" />
+    <java fork="true" classname="clojure.lang.Compile" classpathref="project.classpath" failonerror="true">
+      <classpath path="${src.dir}" />
+      <sysproperty key="clojure.compile.path" value="${classes.dir}" />
+      <arg value="censorbot.servlet" />
+    </java>
+  </target>
+  
+  <target name="devserver" description="run local dev appserver"  depends="compile">
+    <dev_appserver war="war" />
+  </target>
+  
+  <target name="deploy" description="deploy to appspot"  depends="compile">
+    <appcfg action="update" war="war" />
+  </target>
+  
+</project>

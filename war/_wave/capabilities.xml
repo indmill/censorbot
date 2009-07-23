@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<w:robot xmlns:w="http://wave.google.com/extensions/robots/1.0">
+  <w:capabilities>
+    <w:capability name="WAVELET_PARTICIPANTS_CHANGED" content="true" />
+    <w:capability name="WAVELET_SELF_ADDED" content="true" /> 
+    <w:capability name="BLIP_SUBMITTED" content="true" /> 
+    <w:capability name="DOCUMENT_CHANGED" content="true" /> 
+  </w:capabilities>
+  <w:version>13</w:version>
+</w:robot>
